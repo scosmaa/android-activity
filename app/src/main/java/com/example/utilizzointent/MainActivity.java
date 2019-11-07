@@ -53,13 +53,32 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void onClickBtn(View v)
+    public void onClickRFIBtn(View v)
     {
         //com.example.miaproconintent
         Intent intent = getPackageManager().getLaunchIntentForPackage("io.ionic.starter");
         if (intent != null) {
             // We found the activity now start the activity
-            intent.putExtra("someVariable","variableValue");
+            intent.putExtra("usertype","rfi");
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        } else {
+            // Bring user to the market or let them choose an app?
+            intent = new Intent(Intent.ACTION_VIEW);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.setData(Uri.parse("market://details?id=" + "com.package.name"));
+            startActivity(intent);
+        }
+        Toast.makeText(this, "Clicked on Button", Toast.LENGTH_LONG).show();
+    }
+
+    public void onClickExternalBtn(View v)
+    {
+        //com.example.miaproconintent
+        Intent intent = getPackageManager().getLaunchIntentForPackage("io.ionic.starter");
+        if (intent != null) {
+            // We found the activity now start the activity
+            intent.putExtra("usertype","external");
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
         } else {
